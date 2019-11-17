@@ -16,6 +16,7 @@ let opciones={
 
 let opciones2={
     archivo:{
+
         demand: true,
         alias: 'f',
         description: 'Permite establecer el path del archivo CSV que contiene los datos a analizar'

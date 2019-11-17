@@ -24,13 +24,14 @@ let crearArchivo = (archivo,pais,anio)=>{
             var x=0.0;
             acum = 0
             res= 0.0;
-            var vector=[];
+            var vec=[];
 
-            for (let i=5;i<dataArray.length-1;i++){
+            for (let i=5;i<dataArray.length;i++){
                 n= dataArray[i].split(',');
-                vector.push(n)
+                
                 if((n[an])!='"0"' && (n[an]!='""') ){
                     //var datos_archivo=`Datos:	${newArray[2]}\nPaís:	${newArray[0]}\nAño:	${anio}\nValor:	${newArray[an]}`;
+                    vec.push(n)
                     miCadena =""+ n[an];
                     x=x+1;
                     //console.log("------------------",acum)
@@ -61,7 +62,8 @@ let crearArchivo = (archivo,pais,anio)=>{
             acum1 = 0
             res1= 0.0;
             var acum_pais=0;
-            var miCadena3="";            
+            var miCadena3="";      
+            var valor_consulta=0;      
 
             for (let i=5;i<dataArray.length-1;i++){
                 newArray= dataArray[i].split(',');
@@ -116,6 +118,7 @@ let crearArchivo = (archivo,pais,anio)=>{
                 }
                 if(newArray[1]=='"'+pais+'"'){
                    // console.log('entraaaa');
+                   valor_consulta=newArray[an];
                     var datos_archivo=`Datos:	${newArray[2]}\nPaís:	${newArray[0]}\nAño:	${anio}\nValor:	${newArray[an]}`;
                     //console.log(an+" aannn")
                     //console.log(datos_archivo);
@@ -136,58 +139,127 @@ let crearArchivo = (archivo,pais,anio)=>{
             
             var cuarto;
             var quinto;
+            
+            var miCadenac = ""+valor_consulta
+            var cadenac=""
+     
+            if(miCadenac=='""'){
 
+                val_con_int=0;    
+            }else{ 
+
+            for (let j=0;j<miCadenac.length;j++){
+                //console.log(miCadena[j]);
+                if(miCadenac[j]!='"'){
+                    cadenac=cadenac+miCadenac[j];
+                    //console.log(cadena2);
+                }
+            
+            }
+            val_con_int = parseFloat(cadenac);
+        }
+           
+
+            //console.log(val_con_int+" int")
+            console.log(val_con_int+" int")
+            console.log(anio)
+            var cont_max = 0;
+            var cont_min = 0;
             for (let i=5;i<dataArray.length;i++){
                 tercer = dataArray[i].split(',');
-                //console.log(tercer[])
-                if(tercer[1]=='"'+pais+'"'){
-                    posicion_pais=i;
+                //console.log(tercer)
+                if((tercer[an])!='"0"' && (tercer[an]!='""') ){
+                    
+
+                    var miCadenat = ""+tercer[an];
+                    //console.log(miCadenat+" cadenat")
+                    var cadena=""
+                    for (let j=0;j<miCadenat.length;j++){
+                        //console.log(miCadena[j]);
+                        if(miCadenat[j]!='"'){
+                            cadena=cadena+miCadenat[j];
+                            //console.log(cadena2);
+                        }
+                    }
+                    //console.log(cadena+" 111")
+
+                    
+
+                    if(cont_max<5){ 
+                        if(parseFloat(cadena)>val_con_int){
+                        console.log(`-------------Datos:	${tercer[2]}\nPaís:	${tercer[0]}\nAño:	${anio}\nValor:	${tercer[an]}`);
+                        cont_max=cont_max+1                                     
+                    }
+                    
+
+
+                               }
+                               
+                    if(cont_min<5){ 
+                       if(parseFloat(cadena)<val_con_int){
+                        //console.log(`-------------Datos:	${tercer[2]}\nPaís:	${tercer[0]}\nAño:	${anio}\nValor:	${tercer[an]}`);
+                        cont_min=cont_min+1                                     
+                            }           
+
                 }
+            }
             }
 
             //console.log(posicion_pais+" pos")
             
-            val = posicion_pais-5;
-            val2 = posicion_pais+5;
             
-            for(let j=val;j<posicion_pais;j++){
-                cuarto = dataArray[j].split(',');
-                
-                var datos5_archivo=`Datos:	${cuarto[2]}\nPaís:	${cuarto[0]}\nAño:	${anio}\nValor:	${cuarto[an]}`;
-                
-                console.log(datos5_archivo+" data")
-                //console.log(datos5_archivo+" data")    
-            }
+
 
                 console.log("\n\n\n")
-                var datos5_me_archivo;
-                for(let j=posicion_pais+1;j<=val2;j++){
-                quinto = dataArray[j].split(',');
-                
-                
-                if(quinto[2]!='"Suscripciones a telefonía celular móvil"'){
-                    valor=3;
-                    datos5_me_archivo  =`Datos:	${quinto[valor]}\nPaís:	${quinto[0]}\nAño:	${anio}\nValor:	${quinto[an]}`;
-                
-                }else{
-                    valor=2;
-                    datos5_me_archivo  =`Datos:	${quinto[valor]}\nPaís:	${quinto[0]}\nAño:	${anio}\nValor:	${quinto[an]}`;
-                
-                }
-                    console.log(datos5_me_archivo)
-                    console.log()    
-                
-             
-                    
-                console.log("\n\n\n\n")    
-                console.log(vector[0])
-                
-
-
-               // console.log(datos5_me_archivo+" data2")
-                //console.log(datos5_archivo+" data")    
-            }
         
+            //console.log(vec[0])
+           var miCadena4="";
+           var miCadena5="";
+           
+            for (let i = 1; i < vec.length; i++) {
+                for (let j = 0; j < vec.length - 1; j++) {
+                        var cadena4="";
+                        var cadena5="";
+                    
+                        miCadena4 =""+vec[j][an];
+                    
+                        for (let j=0;j<miCadena4.length;j++){
+                            //console.log(miCadena[j]);
+                            if(miCadena4[j]!='"'){
+                                cadena4=cadena4+miCadena4[j];
+                                //console.log(cadena2);
+                            }
+                        }
+
+
+                        miCadena5 =""+vec[j+1][an]; 
+
+                        for (let j=0;j<miCadena5.length;j++){
+                            //console.log(miCadena[j]);
+                            if(miCadena5[j]!='"'){
+                                cadena5=cadena5+miCadena5[j];
+                                //console.log(cadena2);
+                            }
+                        }
+                        
+
+                    
+                        if (parseFloat(cadena4) < parseFloat(cadena5)) {
+                            tem = vec[j];
+                            vec[j] = vec[j + 1];
+                            vec[j + 1] = tem;
+                        }
+                    
+                }
+            }
+            console.log("SIUUUUUUUUUUU\n");
+            //console.log(vec.length)
+            console.log(vec[0][an]);
+            console.log()
+            
+            //console.log(vec[1][an]);
+            
+
         });
     }        
  } );
@@ -205,13 +277,13 @@ let listar=(archivo,pais,anio,nombre)=>{
         fs.writeFile(`resultados/${nombre}.txt`, nom, (err) => {
             if (err){
                  reject(err);
-                                            }
-                    else {
-                     nom=`El archivo ${nombre}.txt fue creado con éxito en la carpeta: \nresultados`;
-                    console.log(nom)
-                    resolve(nom);
-                }                 
-                  });
+            }
+            else {
+                nom=`El archivo ${nombre}.txt fue creado con éxito en la carpeta: \nresultados`;
+                console.log(nom)
+                resolve(nom);
+            }                 
+        });
                 
 
     });
