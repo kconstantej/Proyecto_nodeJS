@@ -1,5 +1,6 @@
 var fs = require('fs');
 var dir = './resultados';
+const colors = require('colors')
 const {crearArchivo}=require('./buscador/buscar');
 var salida="";
 
@@ -12,28 +13,23 @@ let comando = argv._[0]
 
 
 switch(comando){
-    case 'mostrar':
+    case 'publicar':
         var salida="";
         var opcion=null;
-        console.log("crear...");
         crearArchivo(argv.archivo,argv.pais,argv.anio,opcion)
-        .then(archivo=>salida=salida+"\n"+archivo).then(archivo=>console.log("\n"+archivo))
+        .then(archivo=>salida=salida+"\n"+archivo).then(archivo=>console.log("\n"+archivo.green))
         .catch(e=>console.log(e.red));
-        console.log(salida);
         break;
     case 'guardar':
             var salida="";
             var opcion=true;
-            console.log("crear...");
             crearArchivo(argv.archivo,argv.pais,argv.anio,argv.nombre)
-            .then(archivo=>salida=salida+"\n"+archivo).then(archivo=>console.log("Archivo creado: \n"+archivo))
+            .then(archivo=>salida=salida+"\n"+archivo).then(archivo=>console.log("Archivo creado: \n".blue+archivo.yellow))
             .catch(e=>console.log(e.red));
-            console.log(salida);
-
             break;
         break;
     default:
-        console.log("comando no valido!");
+        console.log("comando no valido!".red);
 }
 
 const http = require('http');
@@ -45,7 +41,7 @@ const server = http.createServer((req, res) => {
   res.statusCode = 200;
   res.setHeader('Content-Type', 'text/plain');
   
-  res.end("Archivo creado:\n"+salida,"utf8");
+  res.end("Archivo creado:\n".blue+salida,"utf8");
 });
 
 server.listen(port, hostname, () => {

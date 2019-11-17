@@ -1,4 +1,5 @@
 const fs = require('fs');
+const colors = require('colors');
 var datos_archivo
 var anio
 //se crea una promesa
@@ -280,7 +281,7 @@ let crearArchivo = (archivo,pais,anio,opcion)=>{
                     if (err){
                         console.log(err);
                     }else{
-                        console.log(`resultados/${opcion}.txt`);
+                        console.log(`resultados/${opcion}.txt`.magenta);
                     } 
                     
                   });

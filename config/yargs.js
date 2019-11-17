@@ -37,8 +37,8 @@ let opciones2={
 
 
 
-const argv = require('yargs').command('mostrar','Crea un archivo con la tabla de multiplicar',opciones)
-.command('guardar','listar la tabla de multiplicar',opciones2)
+const argv = require('yargs').command('publicar','Publicar los datos estadisticos',opciones)
+.command('guardar','Crear un archivo que guarde los datos estadisticos',opciones2)
 .help()
 .argv;
 
