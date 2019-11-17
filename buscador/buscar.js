@@ -2,8 +2,9 @@ const fs = require('fs');
 var datos_archivo
 var anio
 //se crea una promesa
-let crearArchivo = (archivo,pais,anio)=>{
+let crearArchivo = (archivo,pais,anio,opcion)=>{
     return new Promise((resolve,reject)=>{
+        
     if (!fs.existsSync(archivo)){
         reject('error el archivo no existe');
     }else{    
@@ -11,6 +12,7 @@ let crearArchivo = (archivo,pais,anio)=>{
             var dataArray = data.split(/\r?\n/);
             var a =dataArray[4].split(',');
             var an;
+            var archivo_general="";
             
             for (let i=0;i<a.length;i++){
                 if(a[i]=='"'+anio+'"'){
@@ -26,7 +28,7 @@ let crearArchivo = (archivo,pais,anio)=>{
             res= 0.0;
             var vec=[];
 
-            for (let i=5;i<dataArray.length;i++){
+            for (let i=5;i<dataArray.length-1;i++){
                 n= dataArray[i].split(',');
                 
                 if((n[an])!='"0"' && (n[an]!='""') ){
@@ -46,15 +48,15 @@ let crearArchivo = (archivo,pais,anio)=>{
                     //console.log(cadena2)
                     acum=acum+(parseFloat(cadena2));
                     //console.log(acum);
-                    //console.log('---------------------------------------------',cadena2)
+                    //console.log('---------------------------------------------',acum)
                     //resolve(datos_archivo);
                             
                 }
             }
 
             res=parseFloat(acum)/x;
-            //console.log('-------------'+res);   
-
+            //console.log('-------------'+acum);   
+            
             var acum2=0.0;
             var miCadena2="";
             var x1=0.0;
@@ -122,13 +124,22 @@ let crearArchivo = (archivo,pais,anio)=>{
                     var datos_archivo=`Datos:	${newArray[2]}\nPaís:	${newArray[0]}\nAño:	${anio}\nValor:	${newArray[an]}`;
                     //console.log(an+" aannn")
                     //console.log(datos_archivo);
-                    resolve(datos_archivo);
+                    archivo_general="\n\n"+archivo_general+" Consulta\n"+datos_archivo+"\n"
                             
                 }
             }
             //console.log(x1)            
             res1=parseFloat(acum1)/(x1);
-            res2=parseFloat(acum_pais)/(x2)
+            res2=parseFloat(acum_pais)/(x2);
+            
+            archivo_general=archivo_general+"\nMEDIA DE SUSCRIPCIONES AÑO "+anio+" es: "+res+"\n\n\n\n"
+            
+
+            if(res1>res2){
+                archivo_general=archivo_general+"La media mundial: "+res1+" es mayor a la media "+res2+" del pais: "+pais+"\n\n";
+            }else{
+                archivo_general=archivo_general+"La media mundial: "+res1+" es menor a la media "+res2+" del pais: "+pais+"\n\n";
+            }
             //console.log('-------------'+res1);
             //console.log(acum_pais+" pais")
             //console.log(x2+" cont3")
@@ -161,10 +172,12 @@ let crearArchivo = (archivo,pais,anio)=>{
            
 
             //console.log(val_con_int+" int")
-            console.log(val_con_int+" int")
-            console.log(anio)
+            //console.log(val_con_int+" int")
+            //console.log(anio)
             var cont_max = 0;
             var cont_min = 0;
+            var arch1 = "";
+            var arch2 = "";
             for (let i=5;i<dataArray.length;i++){
                 tercer = dataArray[i].split(',');
                 //console.log(tercer)
@@ -187,7 +200,7 @@ let crearArchivo = (archivo,pais,anio)=>{
 
                     if(cont_max<5){ 
                         if(parseFloat(cadena)>val_con_int){
-                        console.log(`-------------Datos:	${tercer[2]}\nPaís:	${tercer[0]}\nAño:	${anio}\nValor:	${tercer[an]}`);
+                        arch1=arch1+`Datos: ${tercer[2]}\nPaís:	${tercer[0]}\nAño:	${anio}\nValor:	${tercer[an]}\n\n`;
                         cont_max=cont_max+1                                     
                     }
                     
@@ -197,7 +210,7 @@ let crearArchivo = (archivo,pais,anio)=>{
                                
                     if(cont_min<5){ 
                        if(parseFloat(cadena)<val_con_int){
-                        //console.log(`-------------Datos:	${tercer[2]}\nPaís:	${tercer[0]}\nAño:	${anio}\nValor:	${tercer[an]}`);
+                        arch2=arch2+  `Datos: ${tercer[2]}\nPaís:	${tercer[0]}\nAño:	${anio}\nValor:	${tercer[an]}\n\n`;
                         cont_min=cont_min+1                                     
                             }           
 
@@ -210,7 +223,11 @@ let crearArchivo = (archivo,pais,anio)=>{
             
 
 
-                console.log("\n\n\n")
+
+           archivo_general = archivo_general+" 5 encima\n"+arch1+"\n"
+           archivo_general = archivo_general+" 5 debajo\n"+arch2+"\n"
+            
+           console.log("\n\n\n")
         
             //console.log(vec[0])
            var miCadena4="";
@@ -252,50 +269,38 @@ let crearArchivo = (archivo,pais,anio)=>{
                     
                 }
             }
-            console.log("SIUUUUUUUUUUU\n");
+            //console.log("SIUUUUUUUUUUU\n");
             //console.log(vec.length)
-            console.log(vec[0][an]);
-            console.log()
-            
+            archivo_general=archivo_general+"TOP 5 PAISES\n\n"
+            for(let i=0;i<5;i++){
+                archivo_general=archivo_general+vec[i][0]+"\n"    
+            }
+            if(opcion!=null){
+                fs.writeFile(`resultados/${opcion}.txt`, archivo_general, (err) => {
+                    if (err){
+                        console.log(err);
+                    }else{
+                        console.log(`resultados/${opcion}.txt`);
+                    } 
+                    
+                  });
+            }
+            //console.log(archivo_general)
+            resolve(archivo_general);
             //console.log(vec[1][an]);
             
 
         });
+        
     }        
  } );
  }
 
-
-var nom
-let listar=(archivo,pais,anio,nombre)=>{
-    
-    nom = crearArchivo(archivo,pais,anio);
-    console.log(nom+"----------------------")
-
-    return new Promise((resolve,reject)=>{
-
-        fs.writeFile(`resultados/${nombre}.txt`, nom, (err) => {
-            if (err){
-                 reject(err);
-            }
-            else {
-                nom=`El archivo ${nombre}.txt fue creado con éxito en la carpeta: \nresultados`;
-                console.log(nom)
-                resolve(nom);
-            }                 
-        });
-                
-
-    });
-        
-        
-
-}
+var nom="";
 
 
 
 //si el nombre de la propiedad es igual al valor crearArchivo : crearArchivo solo se puede poner el nommbre, se crea un objeto
 module.exports = {
     crearArchivo,
-    listar
 };

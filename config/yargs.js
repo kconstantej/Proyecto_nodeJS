@@ -29,7 +29,7 @@ let opciones2={
         default: '2004',
         description: 'Permite determinar el país a analizar a través de su código ISO 3166 ALPHA-3'
     },
-    salida:{
+    nombre:{
         demand:true,
         alias:'o'
     }
