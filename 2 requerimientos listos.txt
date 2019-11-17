@@ -24,11 +24,9 @@ let crearArchivo = (archivo,pais,anio)=>{
             var x=0.0;
             acum = 0
             res= 0.0;
-            var vector=[];
-
             for (let i=5;i<dataArray.length-1;i++){
                 n= dataArray[i].split(',');
-                vector.push(n)
+                
                 if((n[an])!='"0"' && (n[an]!='""') ){
                     //var datos_archivo=`Datos:	${newArray[2]}\nPaís:	${newArray[0]}\nAño:	${anio}\nValor:	${newArray[an]}`;
                     miCadena =""+ n[an];
@@ -115,79 +113,28 @@ let crearArchivo = (archivo,pais,anio)=>{
 
                 }
                 if(newArray[1]=='"'+pais+'"'){
-                   // console.log('entraaaa');
+                    console.log('entraaaa');
                     var datos_archivo=`Datos:	${newArray[2]}\nPaís:	${newArray[0]}\nAño:	${anio}\nValor:	${newArray[an]}`;
-                    //console.log(an+" aannn")
-                    //console.log(datos_archivo);
+                    console.log(an+" aannn")
+                    console.log(datos_archivo);
                     resolve(datos_archivo);
                             
                 }
             }
-            //console.log(x1)            
+            console.log(x1)            
             res1=parseFloat(acum1)/(x1);
             res2=parseFloat(acum_pais)/(x2)
-            //console.log('-------------'+res1);
-            //console.log(acum_pais+" pais")
-            //console.log(x2+" cont3")
-            //console.log("----- r2 "+res2)
-
-            var tercer;
-            var posicion_pais=0;
-            
-            var cuarto;
-            var quinto;
-
-            for (let i=5;i<dataArray.length;i++){
-                tercer = dataArray[i].split(',');
-                //console.log(tercer[])
-                if(tercer[1]=='"'+pais+'"'){
-                    posicion_pais=i;
-                }
-            }
-
-            //console.log(posicion_pais+" pos")
-            
-            val = posicion_pais-5;
-            val2 = posicion_pais+5;
-            
-            for(let j=val;j<posicion_pais;j++){
-                cuarto = dataArray[j].split(',');
-                
-                var datos5_archivo=`Datos:	${cuarto[2]}\nPaís:	${cuarto[0]}\nAño:	${anio}\nValor:	${cuarto[an]}`;
-                
-                console.log(datos5_archivo+" data")
-                //console.log(datos5_archivo+" data")    
-            }
-
-                console.log("\n\n\n")
-                var datos5_me_archivo;
-                for(let j=posicion_pais+1;j<=val2;j++){
-                quinto = dataArray[j].split(',');
-                
-                
-                if(quinto[2]!='"Suscripciones a telefonía celular móvil"'){
-                    valor=3;
-                    datos5_me_archivo  =`Datos:	${quinto[valor]}\nPaís:	${quinto[0]}\nAño:	${anio}\nValor:	${quinto[an]}`;
-                
-                }else{
-                    valor=2;
-                    datos5_me_archivo  =`Datos:	${quinto[valor]}\nPaís:	${quinto[0]}\nAño:	${anio}\nValor:	${quinto[an]}`;
-                
-                }
-                    console.log(datos5_me_archivo)
-                    console.log()    
-                
-             
-                    
-                console.log("\n\n\n\n")    
-                console.log(vector[0])
-                
+            console.log('-------------'+res1);
+            console.log(acum_pais+" pais")
+            console.log(x2+" cont3")
+            console.log("----- r2 "+res2)
 
 
-               // console.log(datos5_me_archivo+" data2")
-                //console.log(datos5_archivo+" data")    
-            }
-        
+
+
+
+
+
         });
     }        
  } );
