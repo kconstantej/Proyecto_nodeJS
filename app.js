@@ -2,6 +2,7 @@ var fs = require('fs');
 var dir = './resultados';
 const colors = require('colors')
 const {crearArchivo}=require('./buscador/buscar');
+
 var salida="";
 
 if (!fs.existsSync(dir)){
@@ -10,19 +11,18 @@ if (!fs.existsSync(dir)){
 
 let {argv}=require('./config/yargs')
 let comando = argv._[0]
-
+var salida="";
 
 switch(comando){
     case 'publicar':
-        var salida="";
-        var opcion=null;
+        salida="";
+        var opcion="";
         crearArchivo(argv.archivo,argv.pais,argv.anio,opcion)
         .then(archivo=>salida=salida+"\n"+archivo).then(archivo=>console.log("\n"+archivo.green))
         .catch(e=>console.log(e.red));
         break;
     case 'guardar':
-            var salida="";
-            var opcion=true;
+             salida="";
             crearArchivo(argv.archivo,argv.pais,argv.anio,argv.nombre)
             .then(archivo=>salida=salida+"\n"+archivo).then(archivo=>console.log("Archivo creado: \n".blue+archivo.yellow))
             .catch(e=>console.log(e.red));
@@ -32,18 +32,14 @@ switch(comando){
         console.log("comando no valido!".red);
 }
 
-const http = require('http');
 
-const hostname = '127.0.0.1';
-const port = 3000;
+const express = require('express')
+const app = express();
 
-const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  
-  res.end("Archivo creado:\n".blue+salida,"utf8");
-});
 
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
-});
+app.use(express.static('resultados'))
+
+app.listen(3000,()=>{
+  console.log("servidor iniciado");
+})
+

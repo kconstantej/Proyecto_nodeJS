@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "express": "^4.17.1",
     "regex": "^0.1.1",
     "replace-string": "^3.0.0",
     "yargs": "^14.2.0"

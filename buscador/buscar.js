@@ -37,9 +37,9 @@ let crearArchivo = (archivo,pais,anio,opcion)=>{
             archivo_html=valores_2.html;
             //console.log(archivo_html)
             archivo_general=archivo_general+"\nMEDIA DE SUSCRIPCIONES AÑO "+anio+" es: "+res+"\n\n\n\n"
-            archivo_html=archivo_html+'<table class="table"><tr><th scope="col">MEDIA DE SUSCRIPCIONES AÑO '+anio+'</th>  </tr> <tbody>   <tr>  <td> '
+            archivo_html=archivo_html+'<table class="table"><tr class="table-warning"><th scope="col">MEDIA DE SUSCRIPCIONES AÑO '+anio+'</th>  </tr> <tbody>   <tr>  <td> '
             archivo_html=archivo_html+res+"</td>  </tr></tbody></table> "
-            archivo_html=archivo_html+'<table class="table"> <tr>    <th scope="col">MEDIA MUNDIAL</th>     <th scope="col">ES</th> <th scope="col">MEDIA PAIS ('+pais+')</th>  </tr>  <tbody>    <tr>' 
+            archivo_html=archivo_html+'<table class="table"> <tr class="bg-info">    <th scope="col">MEDIA MUNDIAL</th>     <th scope="col">ES</th> <th scope="col">MEDIA PAIS ('+pais+')</th>  </tr>  <tbody>    <tr>' 
 
             if(res1>res2){
                 archivo_general=archivo_general+"La media mundial: "+res1+" es mayor a la media "+res2+" del pais: "+pais+"\n\n";
@@ -52,7 +52,7 @@ let crearArchivo = (archivo,pais,anio,opcion)=>{
             valores3 = max_min(valor_consulta,dataArray,an,anio,archivo_general);
             archivo_general=valores3.archivo_general
             ex = archivo_html;
-            archivo_html=archivo_html+'<table class="table"> <thead> <tr>   <th scope="col">N°</th>   <th scope="col">Datos</th>   <th scope="col">País</th>   <th scope="col">Año</th><th scope="col">Valor</th>  </tr> </thead>  <tbody> <tr>';
+            archivo_html=archivo_html+'<table class="table table-striped"> <thead> <tr>   <th scope="col">N°</th>   <th scope="col">Datos</th>   <th scope="col">País</th>   <th scope="col">Año</th><th scope="col">Valor</th>  </tr> </thead>  <tbody> <tr>';
             archivo_html+=valores3.html;
             
             valores4 = top5(archivo_general,vec,an);
@@ -61,8 +61,8 @@ let crearArchivo = (archivo,pais,anio,opcion)=>{
             //console.log(archivo_html)
             
 
-            console.log('-------------',opcion)
-            if(opcion!=null){
+            //console.log('-------------',opcion)
+            if(opcion!=""){
                 fs.writeFile(`resultados/${opcion}.txt`, archivo_general, (err) => {
                     if (err){
                         console.log(err);
@@ -209,11 +209,11 @@ function valores(dataArray,an,pais,anio,archivo_general){
                             
                 }
             }
-            archivo_html='<!DOCTYPE html><html>  <head>      <meta charset="utf-8">  <meta name="viewport" content="width=device-width"> <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> </head> <body> <div class="card" style="width: 12rem;"> <div class="card-body">';
-            archivo_html=archivo_html+'<h6> Consulta </h6>    </div> </div>  <table class="table">  <thead> <tr>   <th scope="col">N°</th>   <th scope="col">Datos</th>   <th scope="col">País</th>   <th scope="col">Año</th>   <th scope="col">Valor</th> </tr>   </thead> <tbody>  <tr> <th scope="row">1</th>'
+            archivo_html='<!DOCTYPE html><html>  <head>      <meta charset="utf-8">  <meta name="viewport" content="width=device-width"> <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> '   +'          </head>   <body>   '+' ';
+            archivo_html=archivo_html+'<h1 class="heading" align="center">  Datos <span class="underline--magical">Estadísticos</span> </h1>    </div> </div>  <table class="table">  <thead class="thead-dark"> <tr>   <th scope="col">N°</th>   <th scope="col">Datos</th>   <th scope="col">País</th>   <th scope="col">Año</th>   <th scope="col">Valor</th> </tr>   </thead> <tbody>  <tr> <th scope="row">1</th>'
             archivo_general=archivo_general+"Consulta\n"+datos_archivo+"\n"
             
-            archivo_html=archivo_html+data+"</tr></tbody> </table> ";
+            archivo_html=archivo_html+data+"</tr></tbody> </table> ";  
             
             res1=parseFloat(acum1)/(x1);
             res2=parseFloat(acum_pais)/(x2);
@@ -304,9 +304,9 @@ function max_min(valor_consulta,dataArray,an,anio,archivo_general){
            
            archivo_general = archivo_general+" 5 encima\n"+arch1
            archivo_general = archivo_general+" 5 debajo\n"+arch2
-           archivo_html='<div class="card" style="width: 12rem;"> <div class="card-body">'+"  <h6>5 Paises Superiores</h6>   </div> </div> "+archi1+"</tr></tbody> </table>"+'<table class="table">  <thead> <tr>   <th scope="col">N°</th>   <th scope="col">Datos</th>   <th scope="col">País</th>   <th scope="col">Año</th>   <th scope="col">Valor</th> </tr>   </thead> <tbody>  <tr> '+'<div class="card" style="width: 12rem;"> <div class="card-body"> <h6>5 Paises Inferiores</h6>'+archi2+" </div> </div>  </tr></tbody> </table>";
+           archivo_html='<div class="card" style="width: 12rem;"> <div class="card-body">'+"  <h6>5 Paises Superiores</h6>   </div> </div> "+archi1+"</tr></tbody> </table>"+'<table class="table table-dark">  <thead> <tr>   <th scope="col">N°</th>   <th scope="col">Datos</th>   <th scope="col">País</th>   <th scope="col">Año</th>   <th scope="col">Valor</th> </tr>   </thead> <tbody>  <tr> '+'<div class="card" style="width: 12rem;"> <div class="card-body"> <h6>5 Paises Inferiores</h6>'+archi2+" </div> </div>  </tr></tbody> </table>";
            
-
+           
     return ({archivo_general:archivo_general,html:archivo_html})
 }
 
@@ -350,7 +350,7 @@ function top5(archivo_general,vec,an){
 
     
     archivo_general=archivo_general+"TOP 5 PAISES\n\n"
-    archivo_html='<h6>TOP 5 PAISES</h6>   <table class="table"> <thead> <tr>   <th scope="col">N°</th>   <th scope="col">Pais</th>    </tr>  </thead> <tbody> <tr>';
+    archivo_html='<h6>TOP 5 PAISES</h6>   <table class="table"> <thead> <tr class="table-primary">   <th scope="col">N°</th>   <th scope="col">Pais</th>    </tr>  </thead> <tbody> <tr>';
     var val_html="";
     for(let i=0;i<5;i++){
         archivo_general=archivo_general+vec[i][0]+"\n" 
@@ -358,7 +358,7 @@ function top5(archivo_general,vec,an){
         val_html= val_html+"<td> "+(i+1)+"</td> <td>"+vec[i][0]+"</td> </tr>"   
     }
     console.log(val_html)
-    archivo_html=archivo_html+val_html+"</tr></tbody> </table>"
+    archivo_html=archivo_html+val_html+"</tr></tbody> </table> </body> </html> "
     return ({archivo_general:archivo_general,html:archivo_html});
 }
 
